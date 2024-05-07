@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .games-list {
+            list-style: none;
+            padding: 0;
+        }
+        .game-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin-top: 20px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Game Information</h1>
+        <button onclick="getGames()">Get All Games</button>
+        <ul class="games-list" id="gamesList"></ul>
+    </div>
+
+    <script>
+        async function getGames() {
+            const url = 'http://localhost:5074/games'; // API endpoint for fetching all games
+            try {
+                
+                if (response.ok) {
+                    displayGames(data);
+                } else {
+                    console.error('Error:', data.message || 'Failed to fetch games');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayGames(games) {
+            const gamesList = document.getElementById('gamesList');
+            gamesList.innerHTML = ''; // Clear previous games
+
+            games.forEach(game => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('game-item');
+                listItem.innerHTML = `
+                    <h3>${game.name}</h3>
+                    <p>ID: ${game.id}</p>
+                    <p>Genre: ${game.genre}</p>
+                    <p>Price: $${game.price.toFixed(2)}</p>
+                    <p>Release Date: ${new Date(game.releaseDate).toLocaleDateString()}</p>
+                `;
+                gamesList.appendChild(listItem);
+
+                
+            });
+        }
+
+       
+    </script>
+</body>
+</html>
